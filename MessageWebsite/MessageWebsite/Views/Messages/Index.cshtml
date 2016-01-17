@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MessageWebsite.Models.Message>
+
+@{
+    ViewBag.Title = "Messages";
+}
+
+<h2>Messages</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MessageStr)
+        </th>
+        <th>
+            <!-- @Html.DisplayNameFor(model => model.TimeStamp) -->
+            @Html.ActionLink("Time stamp", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MessageStr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStamp)
+        </td>
+        <td>
+            @using (Html.BeginForm("Delete/" + item.MessageID, "Messages", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> 
+                </div>
+            }
+        </td>
+    </tr>
+}
+
+</table>
